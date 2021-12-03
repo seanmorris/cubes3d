@@ -1,0 +1,78 @@
+.cube.coin .texture.flat::before {
+	opacity: 1;
+	background-color: transparent;
+	background-image: url(/coin.png);
+	background-size: 800%;
+	image-rendering: pixelated;
+
+	width: 48px;
+	height: 48px;
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	transform: translate(-50%, -50%);
+
+	box-sizing: border-box;
+
+	animation: coin-spin 0.55s infinite steps(7);
+
+	transition: opacity 0.10s ease-in, transform 0.15s ease-in;
+}
+
+.cube.coin[data-state=collected] .texture.flat::before {
+	filter: brightness(1.1) saturate(0.15) contrast(2);
+	animation: coin-spin 0.1s infinite steps(7);
+	transition: opacity 0.30s 0.20s ease-in, transform 0.25s ease-in, filter 0.125s 0.075s ease-in;
+	transform: translate(-50%, -350%);
+	opacity: 0;
+}
+
+.coin-count {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 0.25em;
+	padding-right: 1.25em;
+	color: white;
+	text-shadow:
+		2px 2px 0 rgba(0,0,0,0.25)
+		, 2px 0px 0 rgba(0,0,0,0.25)
+		, 2px -2px 0 rgba(0,0,0,0.25)
+		, -2px 0px 0 rgba(0,0,0,0.25)
+		, -2px 2px 0 rgba(0,0,0,0.25)
+		, -2px -2px 0 rgba(0,0,0,0.25)
+	;
+}
+
+.coin-count:before {
+	position: absolute;
+	right: 0.125em;
+	text-shadow: none;
+	image-rendering: pixelated;
+	content: '.';
+	color: transparent;
+	height: 1em;
+	min-width: 1em;
+	background-size: 800%;
+
+
+	background-image: url(/coin.png);
+	background-repeat: no-repeat;
+
+	animation: coin-spin 600ms infinite steps(7);
+}
+
+@keyframes coin-spin {
+	0% {
+		background-position-x: 0%;
+	}
+	100% {
+		background-position-x: 100%;
+	}
+}

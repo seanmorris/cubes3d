@@ -1,0 +1,52 @@
+<div
+	cv-on = "mouseup:lockMouse"
+	class = "liquid inset frame cubes"
+	data-outlines = "[[outlines]]"
+	data-exterior = [[exterior]]
+	style = "--x3d:[[x3d]];--y3d:[[y3d]];--z3d:[[z3d]];--xCam3d:[[xCam3d]];--yCam3d:[[yCam3d]];--zCam3d:[[zCam3d]];--xCamTilt3d:[[xCamTilt3d]];--yCamTilt3d:[[yCamTilt3d]];--zCamTilt3d:[[zCamTilt3d]];--xBound:[[xBound]];--zBound:[[zBound]];"
+>
+	<div class = "world">
+
+		<span class = "contents" cv-each = "cubes:cube">
+			[[cube]]
+		</span>
+
+		<div class = "ground texture">
+			<div class = "panel-row">
+				<div class = "panel"></div>
+				<div class = "panel"></div>
+				<!-- <div class = "panel"></div>
+				<div class = "panel"></div> -->
+			</div>
+			<div class = "panel-row">
+				<div class = "panel"></div>
+				<div class = "panel"></div>
+				<!-- <div class = "panel"></div>
+				<div class = "panel"></div> -->
+			</div>
+			<div class = "panel-row">
+				<div class = "panel"></div>
+				<div class = "panel"></div>
+				<!-- <div class = "panel"></div>
+				<div class = "panel"></div> -->
+			</div>
+			<div class = "panel-row">
+				<div class = "panel"></div>
+				<div class = "panel"></div>
+				<!-- <div class = "panel"></div>
+				<div class = "panel"></div> -->
+			</div>
+
+			<div class = "ground texture collision-zone"></div>
+		</div>
+
+
+
+	</div>
+
+<div class = "hud"></div>
+
+<div class = "coin-count">[[coinCount]]</div>
+<div class = "frame">[[frame]]</div>
+
+</div>

@@ -1,0 +1,435 @@
+.controls {
+	background-color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	transform: translate3d(0px, 0px, 0px);
+	opacity: 0.25;
+	opacity: 0.0;
+}
+
+.controls:hover {
+	opacity: 0.85;
+}
+
+.cubes {
+
+	contain: strict;
+
+	perspective: 2048px;
+
+	--floorHeight: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/*background-color: #333 !important;*/
+	/*background-color: red !important;*/
+	background-image: url(/calm_sea_ft.jpg);
+	background-size: 400% 400%;
+	background-position-x: calc(2% * var(--yCamTilt3d));
+	background-position-y: calc(17.5% + calc(-0.825% * var(--xCamTilt3d)) );
+}
+
+.cubes .cube {
+	position: absolute;
+
+	--size: 128;
+	--height: 1;
+	--width:  1;
+	--length: 1;
+
+	width: calc(1px * var(--size));
+	height: calc(1px * var(--size));
+	position: absolute;
+
+	transform-style: preserve-3d;
+
+	contain: style layout size;
+
+}
+
+.cubes .cube{
+	transform:
+		translate3d(
+			calc(calc(-32px * calc(var(--x) - var(--x3d))))
+			, calc(
+				calc(-1px * calc(var(--floorHeight) + calc(0.5 * var(--size))))
+				+ calc(-1px * calc(var(--y) - var(--y3d)))
+			)
+			, calc(calc(-32px * calc(var(--z) - var(--z3d))))
+		);
+}
+
+.world {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+
+	transform-style: preserve-3d;
+
+	transform:
+		translate3d(
+			calc(-1px * var(--xCam3d))
+			, calc(-1px * var(--yCam3d))
+			, calc(-10.24px * var(--zCam3d))
+		)
+		rotate3d(1, 0, 0, calc(0.9deg * var(--xCamTilt3d)))
+		rotate3d(0, 1, 0, calc(1.8deg * var(--yCamTilt3d)))
+		rotate3d(0, 0, 1, calc(0.9deg * var(--zCamTilt3d)));
+}
+
+.texture {
+	position: absolute;
+	box-sizing: border-box;
+	width: calc(1px * var(--size));
+	height: calc(1px * var(--size));
+	color: white;
+	backface-visibility: hidden;
+	box-sizing: border-box;
+}
+
+[data-outlines=true] .texture {
+	/*border: 1px solid rgba(0,255,0,0.1);*/
+}
+
+.texture::before {
+	content:  ' ';
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	opacity: 0.25;
+	background-image: url(/ui/grid.png);
+	transition: opacity 250ms ease-out;
+	opacity: 0.1;
+}
+
+[data-outlines=false] .texture::before {
+	opacity: 0;
+}
+
+.texture.ground .panel-row:nth-child(2n) .panel:nth-child(2n+1),
+.texture.ground .panel-row:nth-child(2n+1)  .panel:nth-child(2n) {
+	/*background-color:  rgba(0,0,192,0.125);*/
+	/*background-blend-mode: luminosity;*/
+	filter: brightness(0.85) contrast(1.25);
+}
+
+.texture.ground .panel-row:nth-child(2n) .panel:nth-child(2n),
+.texture.ground .panel-row:nth-child(2n+1)  .panel:nth-child(2n+1) {
+	filter: brightness(0.95) contrast(1.125);
+}
+
+.texture.ground .panel {
+	--size: calc(512 * 4);
+
+	background-image: url(/sm/floor-tile-64.png);
+	background-size: 256px;
+	width: calc(1px * var(--size));
+	height: calc(1px * var(--size));
+}
+
+.texture.ground {
+	border: 4px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	transform:
+		rotate3d(1, 0, 0, 90deg)
+		translate3d(
+			calc(32px * var(--x3d))
+			, calc(32px * var(--z3d))
+			, calc( calc(1px * var(--floorHeight)) + calc(-1px * var(--y3d)))
+		);
+}
+
+.texture.ground .collision-zone {
+	width: calc(32px * var(--xBound));
+	height: calc(32px * var(--zBound));
+	background-image: none;
+	border: 3px solid green;
+	transform: translate3d(0px, 0px, 0px);
+}
+
+.texture.top {
+	transform:
+		rotate3d(1, 0, 0, 90deg)
+		translate3d(0px, 0px, calc(-0.495px * var(--size)))
+		scale(var(--w), var(--d) );
+}
+
+.texture.front {
+	transform:
+		rotate3d(0, 0, 0, 0deg)
+		translate3d(0px, 0px, calc(-0.499px * calc(var(--size) * var(--d) )))
+		scaleX(var(--w));
+}
+
+.texture.back {
+	transform:
+		rotate3d(0, 1, 0, 180deg)
+		translate3d(0px, 0px, calc(-0.499px * calc(var(--size) * var(--d) )))
+		scaleX(var(--w));
+}
+
+.texture.left {
+	transform:
+		scaleX(var(--w))
+		rotate3d(0, 1, 0, 90deg)
+		translate3d(0px, 0px, calc(-0.499px * var(--size)))
+		scaleX(var(--d) );
+}
+
+.texture.right {
+	transform:
+		scaleX(var(--w))
+		rotate3d(0, -1, 0, 90deg)
+		translate3d(0px, 0px, calc(-0.499px * var(--size)))
+		scaleX( var(--d) );
+}
+
+.texture.bottom {
+	transform:
+		rotate3d(-1, 0, 0, 90deg)
+		translate3d(0px, 0px, calc(-0.499px * var(--size)))
+		scale(var(--w), var(--d) );
+}
+
+.main .texture.direction::before {
+	top: 0;
+	left: 50%;
+	width: 5px;
+	height: 192px;
+	background-image: none;
+	background-color: red;
+	opacity: 1;
+	transform:
+		translateX(-50%)
+		rotateZ(calc(calc(var(--rad)*1rad) - 180deg));
+	transform-origin: 50% calc(0.495px * var(--size));
+}
+
+.texture.direction {
+	opacity: 0;
+}
+
+.texture.indicator {
+	background-color: rgba(255,255,255,0.125);
+	background-color: rgba(255,255,255,0.0);
+}
+
+[data-colliding=true] .texture.indicator {
+	background-image: none;
+	background-color: rgba(255,0,0,0.125);
+}
+
+[data-colliding=true][data-interior] .texture.indicator {
+	/*display: none;*/
+}
+
+.texture:hover {
+	/*filter: brightness(1.25);*/
+}
+
+.texture.indicator,
+.texture.direction {
+	transform:
+		rotate3d(1, 0, 0, 90deg)
+		translate3d(0px, 0px, calc(-0.495px * var(--size)));
+}
+
+.texture.flat {
+	border: 0;
+	opacity: 1;
+	position: absolute;
+	z-index: 1000;
+	contain: layout style size;
+	transform:
+		rotate3d( 0,   0,   0, calc(0.9deg * var(--zCamTilt3d)))
+		rotate3d( 0,  -1,   0, calc(1.8deg * var(--yCamTilt3d)))
+		rotate3d(-1,   0,   0, calc(0.75deg * var(--xCamTilt3d)))
+		/*translate3d(0px, 0px,  calc(0.20px * var(--size)));*/
+}
+
+.texture.flat::before {
+	opacity: 1;
+	background-color: transparent;
+	background-image: url(/sm/barrel-no-shadow-48-24bit.png);
+	image-rendering: pixelated;
+
+	box-sizing: border-box;
+}
+
+.barrel-hole .texture.top::before {
+	opacity: 1;
+	background-color: transparent;
+	background-image: url(/barrel-hole.png);
+	image-rendering: pixelated;
+	background-size: 600%;
+
+	transform: scaleY(-1) rotate(90deg);
+
+	box-sizing: border-box;
+}
+
+.barrel-hole.open .texture.top:before {
+	animation: barrel-hole-open 250ms steps(5) forwards;
+}
+
+.barrel-hole.closed .texture.top:before {
+	animation: barrel-hole-close 250ms steps(5);
+}
+
+@keyframes barrel-hole-open {
+	0% {
+		background-position-x: 0%;
+	}
+	100% {
+		background-position-x: 100%;
+	}
+}
+
+@keyframes barrel-hole-close {
+	0% {
+		background-position-x: 100%;
+	}
+	100% {
+		background-position-x: 0%;
+	}
+}
+
+
+.texture.ground::before,
+.texture.flat::after { opacity: 0; }
+
+input[type=range] {
+    height:0px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    -webkit-appearance: none;
+	border: 1px solid blue;
+}
+
+.camera-position input[type="range"] {
+	border-color: green;
+}
+
+.camera-tilt input[type="range"] {
+	border-color: red;
+}
+
+.cubes svg {
+	transform: translate3d(0, 0, 0);
+	width: 100%;
+	height: 100%;
+}
+
+.cubes > .frame {
+	transform: translate3d(0, 0, 0);
+	opacity: 1;
+
+	background-color: rgba(0,0,0,0.0);
+	background-blend-mode: difference;
+
+	color: rgba(255,255,255,0.75);
+
+	text-shadow:
+		1px 1px 0 rgba(0,0,0,0.75)
+		, 1px -1px 0 rgba(0,0,0,0.75)
+		, -1px 1px 0 rgba(0,0,0,0.75)
+		, -1px -1px 0 rgba(0,0,0,0.75)
+	;
+
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 0.25rem;
+	font-size: 1em;
+}
+
+.cube .texture:not(.flat) {
+	overflow: hidden;
+}
+
+.cube .texture .spray {
+	position: absolute;
+	height: 275px;
+	/*transform: translate(-50%, -50%);*/
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	pointer-events: none;
+}
+
+.cube .texture.front .spray,
+.cube .texture.back  .spray {
+	width: 275px;
+	transform: translate(-50%, -50%) scaleX(calc(-1 / var(--w)));
+}
+
+.cube .texture.left  .spray,
+.cube .texture.right .spray {
+	width: 275px;
+	transform: translate3d(-50%, -50%, 0) scaleX(calc(-1 / var(--d)));
+}
+
+[data-exterior=true] {
+	background-image: url(/stars.png);
+	animation:
+		stars-stretch ease-in 1 6s forwards,
+		stars-ascend 0.25s linear infinite;
+	background-size: 300% 100%;
+
+}
+
+[data-exterior=true] :not([data-interior=true]):not(.main) > .texture {
+	opacity: 0;
+	transition: opacity 1s 0.5s !important;
+}
+
+[data-exterior=true] :not([data-interior=true][data-colliding=true]):not(.main) > .texture *,
+[data-exterior=true] :not([data-interior=true][data-colliding=true]):not(.main) > .texture .panel,
+[data-exterior=true] :not([data-interior=true][data-colliding=true]):not(.main) > .texture .collision-zone,
+[data-exterior=true] :not([data-interior=true][data-colliding=true]):not(.main) > .texture::before {
+	filter: brightness(0) !important;
+	transition: filter 1s ease-out !important;
+}
+
+@keyframes stars-stretch {
+	0% {
+		background-size: 300% 100%;
+	}
+	100% {
+		background-size: 200% 800%;
+	}
+}
+
+@keyframes stars-ascend {
+	0% {
+		background-position-y: 0%;
+	}
+	100% {
+		background-position-y: -400%;
+	}
+}
+
+@keyframes stars-descend {
+	0% {
+		background-position-y: 0%;
+	}
+	100% {
+		background-position-y: 400%;
+	}
+}
+
+.player .texture {
+	pointer-events: none;
+}
