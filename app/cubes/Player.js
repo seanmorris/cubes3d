@@ -9,7 +9,7 @@ export class Player extends Cube
 	{
 		super(args, parent);
 
-		this.args.css = 'sean main';
+		this.args.css = this.args.css || 'sean main';
 
 		this.coinCollect1 = new Audio('/coin1.wav');
 		this.coinCollect2 = new Audio('/coin2.wav');
@@ -22,6 +22,8 @@ export class Player extends Cube
 		this.coinCollect1.volume = 0.40;
 		this.coinCollect2.volume = 0.30;
 		this.coinCollect3.volume = 0.25;
+
+		this.args.quips = [];
 	}
 
 	update(frame)
@@ -65,5 +67,19 @@ export class Player extends Cube
 		{
 			this.coinCooldown = 160;
 		}
+	}
+
+	showQuip(quip)
+	{
+		const quips = this.args.quips;
+		
+		quips.push(quip);
+
+		while(quips.length > 3)
+		{
+			quips.shift();
+		}
+
+		this.onTimeout(3750, () => quips.shift());
 	}
 }

@@ -259,7 +259,7 @@
 		/*translate3d(0px, 0px,  calc(0.20px * var(--size)));*/
 }
 
-.texture.flat::before {
+.texture.flat.sprite::before {
 	opacity: 1;
 	background-color: transparent;
 	background-image: url(/sm/barrel-no-shadow-48-24bit.png);
@@ -432,4 +432,8 @@ input[type=range] {
 
 .player .texture {
 	pointer-events: none;
+}
+
+.hud {
+	z-index: 1;
 }

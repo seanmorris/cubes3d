@@ -1,0 +1,45 @@
+.texture.flat.speech-bubble {
+}
+
+.texture.flat.speech-bubble:empty {
+	display: none;
+}
+
+.texture.flat.speech-bubble > p {
+	overflow: hidden;
+	font-size: 1rem;
+	white-space: pre;
+	font-weight: bold;
+	margin: 0.25rem;
+	position: relative;
+	top: -85%;
+	left: 50%;
+	color: black;
+	margin-bottom: 0.5rem;
+	width: 19.5rem;
+}
+
+.texture.flat.speech-bubble::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 1;
+	background-color: white;
+	width: 20rem;
+	transform: translate(-0%, -100%);
+	left: 50%;
+	border-radius: 15px;
+	border-bottom-left-radius: 4px;
+}
+
+.texture.flat.speech-bubble::after {
+	position: absolute;
+	left: calc(50% + 0.9rem);
+	top: -2px;
+	transform: scaleX(0.75) translate(-50%, -50%) rotate(45deg) ;
+	content: ' ';
+	opacity: 1;
+	background-color: white;
+	width: 2rem;
+	height: 2rem;
+}

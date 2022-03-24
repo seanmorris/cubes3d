@@ -1,11 +1,11 @@
-.cube.ian .texture.flat {
+.cube.ian .texture.flat.sprite {
 	top: 0px;
 	right: 16px;
 	width: 96px;
 	height: 128px;
 }
 
-.cube.ian .texture.flat::before {
+.cube.ian .texture.flat.sprite::before {
 	background-image: url(/ian.png);
 	/*background-size: 100% 100%;*/
 	background-size: 400% calc(288px * 3);
@@ -13,20 +13,20 @@
 	/*animation: ian-walk 1s steps(4) infinite;*/
 }
 
-.cube.ian .texture.flat.face-front::before {
+.cube.ian .texture.flat.sprite.face-front::before {
 	background-position-y: -304px;
 }
 
-.cube.ian .texture.flat.face-left::before {
+.cube.ian .texture.flat.sprite.face-left::before {
 	background-position-y: -16px;
 	transform: scaleX(-1.0);
 }
 
-.cube.ian .texture.flat.face-back::before {
+.cube.ian .texture.flat.sprite.face-back::before {
 	background-position-y: -592px;
 }
 
-.cube.ian .texture.flat.face-right::before {
+.cube.ian .texture.flat.sprite.face-right::before {
 	background-position-y: -16px;
 }
 

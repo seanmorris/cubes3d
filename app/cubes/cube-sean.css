@@ -1,35 +1,35 @@
-.cube.sean .texture.flat {
+.cube.sean .texture.flat.sprite {
 	top: 0px;
 	right: 16px;
 	width: 96px;
 	height: 128px;
 }
 
-.cube.sean .texture.flat::before {
+.cube.sean .texture.flat.sprite::before {
 	background-image: url(/sean.png);
 	/*background-size: 100% 100%;*/
 	background-size: 400% calc(288px * 3);
 	background-repeat: no-repeat;
 }
 
-.cube.sean[data-walking=true] .texture.flat::before {
+.cube.sean[data-walking=true] .texture.flat.sprite::before {
 	animation: sean-walk 0.5s steps(4) infinite;
 }
 
-.cube.sean .texture.flat.face-front::before {
+.cube.sean .texture.flat.sprite.face-front::before {
 	background-position-y: -304px;
 }
 
-.cube.sean .texture.flat.face-left::before {
+.cube.sean .texture.flat.sprite.face-left::before {
 	background-position-y: -16px;
 	transform: scaleX(-1.0);
 }
 
-.cube.sean .texture.flat.face-back::before {
+.cube.sean .texture.flat.sprite.face-back::before {
 	background-position-y: -592px;
 }
 
-.cube.sean .texture.flat.face-right::before {
+.cube.sean .texture.flat.sprite.face-right::before {
 	background-position-y: -16px;
 }
 

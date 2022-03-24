@@ -1,0 +1,19 @@
+.toolbar:empty {
+	display: none;
+}
+
+.toolbar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 1rem;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.toolbar button {
+	background-color: transparent;
+	border: 1px solid white;
+	color: white;
+	padding: 1rem;
+}

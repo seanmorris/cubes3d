@@ -1,9 +1,24 @@
 import { View } from 'curvature/base/View';
 import { Cubes } from './cubes/Cubes';
 
-globalThis.addEventListener('DOMContentLoaded', function() {
+import { Matrix } from 'matrix-api/Matrix';
 
-	const home = new Cubes;
+if(location.pathname !== '/accept-sso')
+{
+	globalThis.addEventListener('DOMContentLoaded', function() {
 
-	home.render(document.body);
-});
+		const home = new Cubes;
+
+		home.render(document.body);
+	});
+}
+else
+{
+	const baseUrl = 'https://matrix.org/_matrix';
+	const matrix  = new Matrix(baseUrl);
+
+	const query = new URLSearchParams(location.search);
+	const token = query.get('loginToken');
+
+	matrix.completeSso(token);
+}

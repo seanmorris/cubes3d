@@ -31,6 +31,8 @@ export class Cube extends View
 		this.ySpeed   = 0;
 		this.zSpeed   = 0;
 
+		this.age = 0;
+
 		this.args.xAngle = 0;
 		this.args.yAngle = 0;
 		this.args.zAngle = 0;
@@ -47,7 +49,10 @@ export class Cube extends View
 
 		this.args.id = this._id;
 
+
 		this.gravity = 2.25;
+
+		this.moving = false;
 	}
 
 	updateStart(frame)
@@ -139,6 +144,47 @@ export class Cube extends View
 		{
 			this.collisions.add(cube);
 		}
+
+		if(Math.abs(this.xSpeed) < 0.001)
+		{
+			this.xSpeed = 0;
+		}
+
+		if(Math.abs(this.ySpeed) < 0.001)
+		{
+			this.ySpeed = 0;
+		}
+
+		if(Math.abs(this.zSpeed) < 0.001)
+		{
+			this.zSpeed = 0;
+		}
+
+		if(Math.abs(this.xSpeed) > 0.2 || this.ySpeed || Math.abs(this.zSpeed) > 0.2)
+		{
+			if(!this.moving)
+			{
+				this.dispatchEvent(new CustomEvent('start-moving'));
+			}
+			else if(this.age % 45 === 0)
+			{
+				this.dispatchEvent(new CustomEvent('keep-moving'));
+			}
+
+			this.moving = true;
+		}
+
+		if(!this.xSpeed && !this.ySpeed && !this.zSpeed)
+		{
+			if(this.moving)
+			{
+				this.dispatchEvent(new CustomEvent('stop-moving'));
+			}
+
+			this.moving = false;
+		}
+
+		this.age++;
 	}
 
 	collide(other)
@@ -271,13 +317,13 @@ export class Cube extends View
 		{
 			rot += 2;
 		}
-
+		
 		if(xAxis || yAxis)
 		{
+			this.args.walking = true;
+			
 			this.args.rad = (rot + rad) * Math.PI;
 			this.args.rot = rot * 100 + yCamTilt3d;
-
-			this.args.walking = true;
 
 			this.setFace(yCamTilt3d);
 		}
